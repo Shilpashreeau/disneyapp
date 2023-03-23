@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { getChar } from "./services/disneyapi";
+import { useState, useEffect } from "react";
+
+import "./App.css";
+import CharacterDisplay from "./components/CharacterDisplay";
 
 function App() {
+  const [char, setChar] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getChar();
+      console.log(data);
+      setChar(data);
+    };
+    fetchData();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div> 
+      <h3 >Disney Characters</h3>
+      <CharacterDisplay characters={char} />
     </div>
   );
 }
